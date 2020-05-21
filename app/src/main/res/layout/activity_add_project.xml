@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activites.AddProjectActivity"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/projectCode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </EditText>
+        <EditText
+            android:id="@+id/projectName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </EditText>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/checkBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="30px"
+                android:text="CHECK">
+            </Button>
+            <Button
+                android:id="@+id/addBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="30px"
+                android:text="ADD">
+            </Button>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

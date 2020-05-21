@@ -1,0 +1,25 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory >
+
+        <EditTextPreference
+            app:key="url"
+            app:title="@string/PrefixUrl"
+            app:defaultValue="@string/defaultUrl"
+            app:useSimpleSummaryProvider="true" />
+
+
+    </PreferenceCategory>
+
+    <PreferenceCategory >
+
+        <SwitchPreferenceCompat
+            app:key="@string/Archive"
+            app:title="Archive"
+            app:summaryOff="Show archived"
+            app:summaryOn="Show archived" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

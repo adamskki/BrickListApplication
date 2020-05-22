@@ -4,7 +4,9 @@ import android.widget.ImageView
 
 class ItemModel {
     var name:String? = null
+    var code:String? = null
     var color:String? = null
     var amount:String? = null
-//    var image:ImageView? = null
+    var colorID: String? = null
+    var image:ImageView? = null
 }

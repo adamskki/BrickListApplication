@@ -113,7 +113,10 @@ class AddProjectActivity : AppCompatActivity() {
                     val inventoryPart = InventoriesParts(inventoryID = projectID[0], typeID = typeID, itemID = itemID, quantityInSet = quantityInSet, colorID = colorID, extra = item.extra)
                     database!!.inventoryPartsDao().insert(inventoryPart)
                 }
-                println("HALO")
+                    runOnUiThread {
+                        addBtn.isClickable = false
+                        addBtn.isEnabled = false
+                    }
 
             }
                 .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe()

@@ -51,6 +51,8 @@ class ProjectActivity : AppCompatActivity() {
                 item.name = name
                 item.color = color
                 item.amount = amount
+                item.code = brick.itemID
+                item.colorID = brick.colorID.toString()
                 brickList.add(item)
             }
             runOnUiThread {

@@ -26,6 +26,7 @@ class ProjectActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_project)
         setTitle("Project")
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val id:Int = intent.getIntExtra("id",0)
 
@@ -59,6 +60,11 @@ class ProjectActivity : AppCompatActivity() {
 
 
 
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 
 }

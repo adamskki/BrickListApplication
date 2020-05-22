@@ -15,7 +15,7 @@ interface InventoryDao {
     fun removeAll()
 
     @Query("SELECT id FROM Inventories WHERE name= :name")
-    fun getID(name: String):Int
+    fun getID(name: String):List<Int>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(inventories: Inventories)

@@ -1,8 +1,14 @@
 package com.example.assignment_2.activites
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.assignment_2.R
@@ -32,6 +38,10 @@ class ProjectActivity : AppCompatActivity() {
 
 
         val rvContacts = findViewById<View>(R.id.itemListView) as RecyclerView
+        rvContacts.addItemDecoration(
+            DividerItemDecoration(this,
+                DividerItemDecoration.VERTICAL)
+        )
         rvContacts.layoutManager = LinearLayoutManager(this)
         rvContacts.adapter = ItemListAdapter(brickList,this)
 
@@ -67,6 +77,21 @@ class ProjectActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
+    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.menu_save, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.action_save -> {
+            Log.i("save","OK")
+            true
+        }
+        else -> {
+            super.onOptionsItemSelected(item)
+        }
     }
 
 }

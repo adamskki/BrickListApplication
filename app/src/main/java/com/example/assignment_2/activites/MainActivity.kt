@@ -8,6 +8,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.assignment_2.R
@@ -92,6 +93,7 @@ class MainActivity : AppCompatActivity() {
         var inventoryListProjects:List<Inventories>
         var adapter:InventoriesListAdapter
         val recycleInventories = findViewById<View>(R.id.inventoryRecycleView) as RecyclerView
+        recycleInventories.addItemDecoration(DividerItemDecoration(this,DividerItemDecoration.VERTICAL))
 
 
         Observable.fromCallable{

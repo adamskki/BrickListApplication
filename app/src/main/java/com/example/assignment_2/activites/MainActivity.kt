@@ -100,8 +100,11 @@ class MainActivity : AppCompatActivity() {
             database = dataBaseConnection.getInstance(this)
 
             inventoryListProjects = database!!.inventoryDao().getAll()
-            adapter = InventoriesListAdapter(inventoryListProjects, this)
-            recycleInventories.adapter = adapter
+            runOnUiThread {
+                adapter = InventoriesListAdapter(inventoryListProjects, this)
+                recycleInventories.adapter = adapter
+            }
+
 
         }
         .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe()

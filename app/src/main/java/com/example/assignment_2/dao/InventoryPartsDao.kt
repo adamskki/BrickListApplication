@@ -1,9 +1,6 @@
 package com.example.assignment_2.dao
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.example.assignment_2.model.InventoriesParts
 
 
@@ -20,5 +17,8 @@ interface InventoryPartsDao {
 
     @Query("DELETE FROM InventoriesParts")
     fun removeAll()
+
+    @Query("UPDATE InventoriesParts SET QuantityInStore =:quantity WHERE ItemID =:itemID AND TypeID =:typeID AND ColorID =:colorID")
+    fun updateQuantity(quantity: Int, itemID: String, typeID: Int, colorID: Int)
 
 }

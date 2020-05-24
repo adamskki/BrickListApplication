@@ -18,6 +18,7 @@ import com.example.assignment_2.project.ItemModel
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_add_project.*
 
 class ProjectActivity : AppCompatActivity() {
 
@@ -57,11 +58,13 @@ class ProjectActivity : AppCompatActivity() {
                 var item = ItemModel()
                 val name = database!!.partDao().getName(brick.itemID)
                 val color = database!!.colorDao().getColorName(brick.colorID.toString())
-                val amount = "${brick.quantityInStore} of ${brick.quantityInSet}"
+//                val amount = "${brick.quantityInStore} of ${brick.quantityInSet}"
                 item.name = name
                 item.color = color
-                item.amount = amount
+                item.amount = brick.quantityInStore
+                item.maxAmount = brick.quantityInSet
                 item.code = brick.itemID
+                item.typeID = brick.typeID
                 item.colorID = brick.colorID.toString()
                 brickList.add(item)
             }

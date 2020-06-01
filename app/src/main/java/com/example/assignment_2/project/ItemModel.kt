@@ -8,6 +8,7 @@ class ItemModel {
     var code:String? = null
     var typeID: Int? = null
     var color:String? = null
+    var active: Boolean? = null
     var amount:Int? = null
     var maxAmount: Int? = null
     var colorID: String? = null

@@ -1,6 +1,7 @@
 package com.example.assignment_2.activites
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -8,6 +9,7 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,12 +26,16 @@ import com.github.kittinunf.result.Result
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 
 
 class MainActivity : AppCompatActivity() {
 
     private var database: dataBaseConnection? = null
+    private var inventoryListProjects: List<Inventories> = ArrayList()
+    private var sharedPreferences: SharedPreferences? = null
+
 
     private val xmlMapper = XmlMapper()
 
@@ -39,6 +45,10 @@ class MainActivity : AppCompatActivity() {
 
         setTitle("BrickList");
 
+
+        inventoryRecycleView.layoutManager = LinearLayoutManager(this)
+        inventoryRecycleView.adapter = InventoriesListAdapter(inventoryListProjects, this)
+
         val fab: View = findViewById(R.id.addProducts)
         fab.setOnClickListener { view ->
             val intent = Intent(this, AddProjectActivity::class.java)
@@ -46,9 +56,9 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-
-        xmlMapper.setDefaultUseWrapper(false)
-        xmlMapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT)
+//
+//        xmlMapper.setDefaultUseWrapper(false)
+//        xmlMapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT)
 
 //        Observable.fromCallable{
 //            database = dataBaseConnection.getInstance(this)
@@ -61,56 +71,60 @@ class MainActivity : AppCompatActivity() {
 //        .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe()
 
 
-        val httpAsync = "http://fcds.cs.put.poznan.pl/MyWeb/BL/615.xml".httpGet()
-            .responseString { request, response, result ->
-                when (result) {
-                    is Result.Failure -> {
-                        val ex = result.getException()
-                        println(ex)
-                    }
-                    is Result.Success -> {
-                        val data = result.get()
-//                        println(data)
-                        val value: InventoryXML = xmlMapper.readValue(data, InventoryXML::class.java)
-
-                        //path to com.example.bricklist
-//                        val pathFile = filesDir.absolutePath + "/inventory.xml"
-
-                        //writing
-//                        xmlMapper.writeValue(File(pathFile), value)
-
-//                        val test = xmlMapper.readValue(File(pathFile), InventoryXML::class.java)
-//                        println(test)
-                    }
-                }
-            }
-        httpAsync.join()
+//        val httpAsync = "http://fcds.cs.put.poznan.pl/MyWeb/BL/615.xml".httpGet()
+//            .responseString { request, response, result ->
+//                when (result) {
+//                    is Result.Failure -> {
+//                        val ex = result.getException()
+//                        println(ex)
+//                    }
+//                    is Result.Success -> {
+//                        val data = result.get()
+////                        println(data)
+//                        val value: InventoryXML = xmlMapper.readValue(data, InventoryXML::class.java)
+//
+//                        //path to com.example.bricklist
+////                        val pathFile = filesDir.absolutePath + "/inventory.xml"
+//
+//                        //writing
+////                        xmlMapper.writeValue(File(pathFile), value)
+//
+////                        val test = xmlMapper.readValue(File(pathFile), InventoryXML::class.java)
+////                        println(test)
+//                    }
+//                }
+//            }
+//        httpAsync.join()
     }
 
     override fun onResume() {
         super.onResume()
 
-        var inventoryListProjects:List<Inventories>
-        var adapter:InventoriesListAdapter
         val recycleInventories = findViewById<View>(R.id.inventoryRecycleView) as RecyclerView
+
+        PreferenceManager.setDefaultValues(this, R.xml.root_preferences, false)
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+
+
         recycleInventories.addItemDecoration(DividerItemDecoration(this,DividerItemDecoration.VERTICAL))
+        recycleInventories.layoutManager = LinearLayoutManager(this)
+        val showArchived = sharedPreferences!!.getBoolean("Archive", true)
 
 
         Observable.fromCallable{
             database = dataBaseConnection.getInstance(this)
-
             inventoryListProjects = database!!.inventoryDao().getAll()
-            runOnUiThread {
-                adapter = InventoriesListAdapter(inventoryListProjects, this)
-                recycleInventories.adapter = adapter
+            if(!showArchived) {
+                inventoryListProjects = inventoryListProjects.filter { inventory -> inventory.active == 1 }
             }
+                runOnUiThread {
+                    recycleInventories.adapter = InventoriesListAdapter(inventoryListProjects, this)
+                }
 
 
         }
         .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe()
 
-
-        recycleInventories.layoutManager = LinearLayoutManager(this)
 
 
     }

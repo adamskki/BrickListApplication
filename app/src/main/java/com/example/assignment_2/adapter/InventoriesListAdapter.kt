@@ -80,7 +80,6 @@ class InventoriesListAdapter(private val inventoryList: List<Inventories>, priva
             params.height = 0
             params.width = 0
             holderInventory.itemView.layoutParams = params
-            println("Co sie dzieje")
         }
 
 
@@ -92,8 +91,6 @@ class InventoriesListAdapter(private val inventoryList: List<Inventories>, priva
                 }
                     .doOnNext{
                         database!!.inventoryDao().setNonActivated(inventoryList[position].id)
-                        println(inventoryList[position].id)
-                        println(database!!.inventoryDao().getActive(inventoryList[position].id))
                     }
                     .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe()
                 if(!showArchived) {
@@ -102,7 +99,6 @@ class InventoriesListAdapter(private val inventoryList: List<Inventories>, priva
                     params.height = 0
                     params.width = 0
                     holderInventory.itemView.layoutParams = params
-                    println("Co sie dzieje")
                 }
             }
             else {
@@ -112,9 +108,6 @@ class InventoriesListAdapter(private val inventoryList: List<Inventories>, priva
                 }
                     .doOnNext{
                         database!!.inventoryDao().setActivated(inventoryList[position].id)
-                        println("NonActive")
-                        println(inventoryList[position].id)
-                        println(database!!.inventoryDao().getActive(inventoryList[position].id))
                     }
                     .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe()
             }

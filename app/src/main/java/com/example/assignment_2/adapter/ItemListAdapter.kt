@@ -68,9 +68,7 @@ class ItemListAdapter(private val items: ArrayList<ItemModel>, private val conte
 
 
         holder.addBtn.setOnClickListener {
-            println(position)
             if(items[position].amount != items[position].maxAmount){
-                println(items[position].maxAmount)
                 items[position].amount = items[position].amount!! + 1
                 holder.itemAmount.text = "${items[position].amount} of ${items[position].maxAmount}"
             }
@@ -94,7 +92,6 @@ class ItemListAdapter(private val items: ArrayList<ItemModel>, private val conte
             }
         }
         holder.minBtn.setOnClickListener {
-            println(position)
             if(items[position].amount != 0) {
                 items[position].amount = items[position].amount!! - 1
                 holder.itemAmount.text = "${items[position].amount} of ${items[position].maxAmount}"

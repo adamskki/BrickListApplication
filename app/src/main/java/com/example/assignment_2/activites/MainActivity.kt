@@ -52,7 +52,6 @@ class MainActivity : AppCompatActivity() {
         val fab: View = findViewById(R.id.addProducts)
         fab.setOnClickListener { view ->
             val intent = Intent(this, AddProjectActivity::class.java)
-            // start your next activity
             startActivity(intent)
         }
 

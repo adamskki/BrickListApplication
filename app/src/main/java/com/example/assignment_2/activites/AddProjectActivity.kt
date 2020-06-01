@@ -96,11 +96,6 @@ class AddProjectActivity : AppCompatActivity() {
                 database = dataBaseConnection.getInstance(this)
 
                 val currentDateTime = LocalDateTime.now()
-//                database!!.inventoryDao().removeAll()
-//                database!!.inventoryPartsDao().removeAll()
-
-//                database!!.inventoryDao().removeAll()
-
                 val newProject = Inventories(name = name, active = 1,lastAccessed = (currentDateTime.format(DateTimeFormatter.BASIC_ISO_DATE)).toInt())
                 database!!.inventoryDao().insert(newProject)
                 val projectID:List<Int> = database!!.inventoryDao().getID(newProject.name)

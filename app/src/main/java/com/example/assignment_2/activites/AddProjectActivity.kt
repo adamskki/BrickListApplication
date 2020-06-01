@@ -42,6 +42,7 @@ class AddProjectActivity : AppCompatActivity() {
         projectName.setHint("Name")
         projectCode.setHint("Project Code")
 
+
         val checkBtn: View = findViewById(R.id.checkBtn)
         checkBtn.setOnClickListener { view ->
 

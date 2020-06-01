@@ -1,9 +1,7 @@
 package com.example.assignment_2.activites
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -14,17 +12,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.assignment_2.R
 import com.example.assignment_2.adapter.ItemListAdapter
 import com.example.assignment_2.database.dataBaseConnection
+import com.example.assignment_2.model.InventoriesParts
 import com.example.assignment_2.project.ItemModel
+import com.example.assignment_2.project.XmlSaveParser
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.activity_add_project.*
+import java.io.File
 
 class ProjectActivity : AppCompatActivity() {
 
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var viewAdapter: RecyclerView.Adapter<*>
-    private lateinit var viewManager: RecyclerView.LayoutManager
     var brickList = ArrayList<ItemModel>()
     private var database: dataBaseConnection? = null
 
@@ -54,18 +51,20 @@ class ProjectActivity : AppCompatActivity() {
         }.doOnNext {
             val inventoryPartsList = database!!.inventoryPartsDao().getAllInventoryParts(id)
             println(inventoryPartsList)
-            for (brick in inventoryPartsList) {
+            for (brick in inventoryPartsList!!) {
                 var item = ItemModel()
                 val name = database!!.partDao().getName(brick.itemID)
                 val color = database!!.colorDao().getColorName(brick.colorID.toString())
-//                val amount = "${brick.quantityInStore} of ${brick.quantityInSet}"
+                val type = database!!.itemTypeDao().getCode(brick.typeID)
+                if(brick.typeID == 0) continue
                 item.name = name
                 item.color = color
                 item.amount = brick.quantityInStore
                 item.maxAmount = brick.quantityInSet
                 item.code = brick.itemID
-                item.typeID = brick.typeID
                 item.colorID = brick.colorID.toString()
+                item.typeID = brick.typeID
+                item.type = type
                 brickList.add(item)
             }
             runOnUiThread {
@@ -89,7 +88,11 @@ class ProjectActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_save -> {
-            Log.i("save","OK")
+            val id:Int = intent.getIntExtra("id",0)
+            val path = "${filesDir.absolutePath}/inventory${id}.xml"
+            val xml = XmlSaveParser()
+            xml.saveXML(brickList, File(path))
+
             true
         }
         else -> {

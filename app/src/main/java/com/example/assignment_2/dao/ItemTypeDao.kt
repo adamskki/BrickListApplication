@@ -9,4 +9,8 @@ import com.example.assignment_2.model.ItemTypes
 interface ItemTypeDao {
     @Query("SELECT * FROM ItemTypes")
     fun getAll(): List<ItemTypes>
+
+    @Query("SELECT Code from ItemTypes WHERE id =:typeID")
+    fun getCode(typeID: Int): String
+
 }

@@ -56,45 +56,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-//
-//        xmlMapper.setDefaultUseWrapper(false)
-//        xmlMapper.enable(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT)
-
-//        Observable.fromCallable{
-//            database = dataBaseConnection.getInstance(this)
-//
-////            val test = Inventories(active = 1, lastAccessed = 2, name = "Halo" )
-////            database!!.inventoryDao().insert(test)
-//            println("Halo")
-//
-//        }
-//        .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe()
-
-
-//        val httpAsync = "http://fcds.cs.put.poznan.pl/MyWeb/BL/615.xml".httpGet()
-//            .responseString { request, response, result ->
-//                when (result) {
-//                    is Result.Failure -> {
-//                        val ex = result.getException()
-//                        println(ex)
-//                    }
-//                    is Result.Success -> {
-//                        val data = result.get()
-////                        println(data)
-//                        val value: InventoryXML = xmlMapper.readValue(data, InventoryXML::class.java)
-//
-//                        //path to com.example.bricklist
-////                        val pathFile = filesDir.absolutePath + "/inventory.xml"
-//
-//                        //writing
-////                        xmlMapper.writeValue(File(pathFile), value)
-//
-////                        val test = xmlMapper.readValue(File(pathFile), InventoryXML::class.java)
-////                        println(test)
-//                    }
-//                }
-//            }
-//        httpAsync.join()
     }
 
     override fun onResume() {
@@ -120,8 +81,6 @@ class MainActivity : AppCompatActivity() {
                 runOnUiThread {
                     recycleInventories.adapter = InventoriesListAdapter(inventoryListProjects, this)
                 }
-
-
         }
         .subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe()
 
